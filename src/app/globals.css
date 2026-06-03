@@ -1,26 +1,88 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --color-primary: #1a1a1a;
+  --color-primary-foreground: #ffffff;
+  
+  --color-secondary: #ff6600; /* Bright Orange from reference */
+  --color-secondary-foreground: #ffffff;
+  
+  --color-background: #ffffff;
+  --color-foreground: #1a1a1a;
+  
+  --color-surface: #e9f2fb; /* Light pastel blue from the Zenith Plaza card */
+  --color-surface-foreground: #1a1a1a;
+  
+  --color-card: #ffffff; /* White floating cards */
+  --color-card-foreground: #1a1a1a;
+
+  --color-muted: #f4f4f5;
+  --color-muted-foreground: #71717a;
+
+  --font-display: var(--font-manrope); /* Using Manrope for clean, thin architectural look */
+  --font-sans: var(--font-manrope);
+
+  --radius-sm: 0.5rem;
+  --radius-md: 1rem;
+  --radius-lg: 1.5rem;
+  --radius-xl: 2rem;
+  --radius-2xl: 3rem; /* Very rounded corners as per reference */
+
+  --container-max: 1600px; /* Wider container for the new layout */
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* ─── Scroll Performance ─── */
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* Base resets & utilities */
+@layer base {
+  body {
+    @apply bg-background text-foreground font-sans antialiased overflow-x-hidden;
+  }
+  
+  /* GPU-promote elements that animate */
+  img,
+  video {
+    content-visibility: auto;
+  }
+  
+  /* Smoother image rendering */
+  img {
+    image-rendering: auto;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer utilities {
+  .ambient-bg {
+    /* Soft side gradients mimicking the reference image */
+    background: linear-gradient(90deg, rgba(162, 203, 237, 0.4) 0%, rgba(255, 255, 255, 0) 25%, rgba(255, 255, 255, 0) 75%, rgba(222, 114, 53, 0.4) 100%);
+    background-attachment: fixed;
+  }
+
+  .floating-card {
+    @apply bg-white rounded-2xl md:rounded-[3rem] shadow-[0_20px_50px_rgba(0,0,0,0.05)] border border-white/50;
+  }
+  
+  .glass-pill {
+    @apply bg-white/70 backdrop-blur-md px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest text-primary border border-white/50 shadow-sm;
+  }
+  
+  .solid-pill {
+    @apply bg-gray-100 text-gray-500 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest;
+  }
+
+  /* GPU-accelerated transforms for animated elements */
+  .will-change-transform {
+    will-change: transform;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+  }
 }
+
