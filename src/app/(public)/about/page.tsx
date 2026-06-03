@@ -7,7 +7,7 @@ export default function AboutPage() {
       <section className="w-full px-8 lg:px-16 pt-24 pb-16 text-center max-w-4xl mx-auto">
         <ScrollReveal>
           <span className="font-sans text-xs font-bold text-gray-400 uppercase tracking-[0.3em] mb-6 block">
-            Our Philosophy
+            About Us
           </span>
           <h1 className="font-sans text-5xl md:text-7xl font-medium text-black mb-8 leading-[1.1] tracking-tighter uppercase">
             Redefining Modern Luxury

@@ -42,7 +42,7 @@ export function Navbar() {
   const navLinks = [
     { name: "Home", href: "/" },
     { name: "Estates", href: "/properties" },
-    { name: "Philosophy", href: "/about" },
+    { name: "About", href: "/about" },
     { name: "Contact", href: "/contact" },
   ];
 
