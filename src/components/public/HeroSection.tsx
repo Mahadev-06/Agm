@@ -8,7 +8,7 @@ const cinematicEase: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
 export function HeroSection() {
   return (
-    <section className="px-8 lg:px-16 pt-16 pb-32 flex flex-col w-full max-w-[1600px] mx-auto overflow-hidden relative">
+    <section className="px-8 lg:px-16 pt-24 md:pt-16 pb-32 flex flex-col w-full max-w-[1600px] mx-auto overflow-hidden relative">
       {/* Ambient morphing blobs */}
       <div className="absolute -top-20 -left-20 z-0 opacity-40">
         <MorphingBlob variant="organic1" color="#ff6b00" size={400} opacity={0.06} autoAnimate />
@@ -69,8 +69,8 @@ export function HeroSection() {
          <div className="absolute -top-[3px] left-[25%] w-24 h-11 md:-top-[4px] md:left-[30%] md:w-32 md:h-18 bg-white rounded-b-2xl md:rounded-b-[2rem] z-10"></div>
          
          {/* Simulate Left/Right Edge Cutouts */}
-         <div className="absolute top-[60%] -left-[6px] w-9 h-16 md:top-[70%] md:-left-[8px] md:w-18 md:h-24 bg-white rounded-r-2xl md:rounded-r-[2rem] z-10"></div>
-         <div className="absolute top-[75%] -right-[6px] w-9 h-16 md:top-[70%] md:-right-[8px] md:w-18 md:h-24 bg-white rounded-l-2xl md:rounded-l-[2rem] z-10"></div>
+         <div className="absolute top-[25%] -left-[6px] w-7 h-12 md:top-[70%] md:-left-[8px] md:w-18 md:h-24 bg-white rounded-r-2xl md:rounded-r-[2rem] z-10"></div>
+         <div className="absolute top-[40%] -right-[6px] w-7 h-12 md:top-[70%] md:-right-[8px] md:w-18 md:h-24 bg-white rounded-l-2xl md:rounded-l-[2rem] z-10"></div>
 
          {/* The Glassmorphism Hotspot */}
          <div className="absolute bottom-[8%] left-1/2 -translate-x-1/2 w-[calc(100%-2.5rem)] max-w-[280px] sm:max-w-[320px] z-20 flex flex-col items-center md:bottom-[15%] md:left-[25%] md:translate-x-0 md:w-auto md:max-w-none md:flex-row md:items-center">
