@@ -9,7 +9,7 @@ export default function AboutPage() {
           <span className="font-sans text-xs font-bold text-gray-400 uppercase tracking-[0.3em] mb-6 block">
             About Us
           </span>
-          <h1 className="font-sans text-5xl md:text-7xl font-medium text-black mb-8 leading-[1.1] tracking-tighter uppercase">
+          <h1 className="font-sans text-4xl sm:text-5xl md:text-7xl font-medium text-black mb-8 leading-[1.1] tracking-tighter uppercase">
             Redefining Modern Luxury
           </h1>
           <p className="font-sans text-lg text-gray-500 font-medium">
@@ -22,7 +22,7 @@ export default function AboutPage() {
       <section className="w-full px-8 lg:px-16 pb-32 max-w-6xl mx-auto flex flex-col gap-8">
         
         <ScrollReveal delay={0.2}>
-          <div className="bg-[#f5f5f5] rounded-3xl p-12 md:p-20 flex flex-col md:flex-row gap-16 items-center">
+          <div className="bg-[#f5f5f5] rounded-3xl p-6 sm:p-10 md:p-20 flex flex-col md:flex-row gap-16 items-center">
             <div className="md:w-1/2">
               <h2 className="font-sans text-3xl font-medium text-black uppercase tracking-tight mb-6">The Curated Approach</h2>
               <p className="font-sans text-sm text-gray-600 mb-6 font-medium leading-relaxed">
@@ -32,14 +32,14 @@ export default function AboutPage() {
                 Every property we represent has been vetted by our team of architectural historians, design experts, and market analysts to ensure it meets our exacting standards.
               </p>
             </div>
-            <div className="md:w-1/2 w-full h-80 bg-[#faebe0] rounded-3xl flex items-center justify-center p-8 text-center relative overflow-hidden group">
+            <div className="md:w-1/2 w-full h-80 bg-[#faebe0] rounded-3xl flex items-center justify-center p-6 md:p-8 text-center relative overflow-hidden group">
                <img 
                  src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=2800&auto=format&fit=crop" 
                  alt="Luxury Interior"
                  className="absolute inset-0 w-full h-full object-cover rounded-3xl transition-transform duration-700 group-hover:scale-105"
                />
                <div className="absolute inset-0 bg-black/20 rounded-3xl"></div>
-               <span className="relative z-10 font-sans text-4xl text-white font-medium uppercase tracking-tight">Architecture as Art</span>
+               <span className="relative z-10 font-sans text-xl sm:text-2xl md:text-3xl lg:text-4xl text-white font-medium uppercase tracking-tight">Architecture as Art</span>
             </div>
           </div>
         </ScrollReveal>
