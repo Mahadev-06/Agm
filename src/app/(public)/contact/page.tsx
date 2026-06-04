@@ -9,7 +9,7 @@ export default function ContactPage() {
           <span className="font-sans text-xs font-bold text-gray-400 uppercase tracking-[0.3em] mb-6 block">
             Get in Touch
           </span>
-          <h1 className="font-sans text-5xl md:text-7xl font-medium text-black mb-8 leading-[1.1] tracking-tighter uppercase">
+          <h1 className="font-sans text-3xl sm:text-5xl md:text-7xl font-medium text-black mb-8 leading-[1.1] tracking-tighter uppercase">
             Private Consultations
           </h1>
           <p className="font-sans text-lg text-gray-500 font-medium">
@@ -25,7 +25,7 @@ export default function ContactPage() {
             {/* Contact Info */}
             <div className="md:w-5/12 bg-[#faebe0] p-12 lg:p-16 flex flex-col justify-between">
               <div>
-                <h3 className="font-sans text-3xl font-medium text-black uppercase tracking-tight mb-8">Global Offices</h3>
+                <h3 className="font-sans text-2xl sm:text-3xl font-medium text-black uppercase tracking-tight mb-8">Global Offices</h3>
                 
                 <div className="space-y-8">
                   <div className="flex items-start gap-4">
