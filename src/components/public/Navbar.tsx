@@ -53,13 +53,13 @@ export function Navbar() {
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
         className={cn(
-          "sticky top-0 md:top-2 z-50 transition-all duration-500 w-full md:mx-auto md:w-[calc(100%-2rem)] md:max-w-6xl md:rounded-full md:mt-6",
+          "sticky z-50 transition-all duration-500 mx-auto w-[calc(100%-2rem)] max-w-6xl rounded-full border border-white/60 shadow-[0_8px_32px_rgba(0,0,0,0.03)]",
           isScrolled
-            ? "bg-white/80 backdrop-blur-2xl border-b border-gray-100/50 py-4 md:py-3 shadow-[0_8px_32px_rgba(0,0,0,0.02)] md:border md:border-white/50"
-            : "bg-white/70 backdrop-blur-md md:bg-transparent md:backdrop-blur-none border-b border-gray-100/30 md:border-transparent py-4 md:py-6"
+            ? "bg-white/85 backdrop-blur-2xl py-3 shadow-[0_8px_32px_rgba(0,0,0,0.06)] top-3 mt-3"
+            : "bg-white/75 backdrop-blur-xl py-4 top-4 mt-4"
         )}
       >
-        <div className="flex justify-between items-center px-6 md:px-8 lg:px-16 w-full mx-auto">
+        <div className="flex justify-between items-center px-6 md:px-8 lg:px-12 w-full mx-auto">
           {/* Logo V (mockup style) */}
           <Link
             href="/"
@@ -68,9 +68,9 @@ export function Navbar() {
             <div className="font-sans font-black text-2xl tracking-tighter text-black select-none transition-transform group-hover:scale-105">
               A
             </div>
-            <div className="hidden md:flex flex-col border-l border-gray-200 pl-3">
-              <span className="text-[11px] font-bold uppercase tracking-[0.35em] text-black">Agm</span>
-              <span className="text-[8px] uppercase tracking-[0.2em] font-medium text-gray-400">Urban Crest</span>
+            <div className="flex flex-col border-l border-gray-200 pl-3">
+              <span className="text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.35em] text-black">Agm</span>
+              <span className="text-[7px] sm:text-[8px] uppercase tracking-[0.2em] font-medium text-gray-400">Urban Crest</span>
             </div>
           </Link>
 
@@ -90,7 +90,7 @@ export function Navbar() {
           <div className="hidden md:block">
             <Link
               href="/custom-request"
-              className="bg-primary text-white px-8 py-3 rounded-full font-sans text-xs font-bold uppercase tracking-widest hover:bg-secondary hover:text-white transition-all shadow-md hover:shadow-lg inline-block"
+              className="bg-black text-white px-8 py-3 rounded-full font-sans text-xs font-bold uppercase tracking-widest hover:bg-gray-800 transition-colors shadow-md hover:shadow-lg inline-block"
             >
               Bespoke Request
             </Link>
