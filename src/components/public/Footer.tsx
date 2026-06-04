@@ -2,8 +2,12 @@
 
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
+import { usePathname } from "next/navigation";
 
 export function Footer() {
+  const pathname = usePathname();
+  const isContactPage = pathname === "/contact";
+
   return (
     <footer className="w-full max-w-[1600px] mx-auto px-4 md:px-8 pb-8 mt-auto z-10 relative bg-white rounded-b-[3rem]">
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-3">
@@ -46,14 +50,16 @@ export function Footer() {
               We build tomorrow's landscapes today
             </h2>
             
-            <div className="mt-8 w-full">
-              <Link href="/contact" className="bg-white rounded-full p-2 pl-6 flex items-center justify-between group hover:shadow-md transition-shadow max-w-full">
-                <span className="font-sans font-semibold text-sm text-gray-800">Contact us</span>
-                <div className="bg-black text-white w-10 h-10 rounded-full flex items-center justify-center transform transition-transform group-hover:rotate-45">
-                  <ArrowUpRight size={18} />
-                </div>
-              </Link>
-            </div>
+            {!isContactPage && (
+              <div className="mt-8 w-full">
+                <Link href="/contact" className="bg-white rounded-full p-2 pl-6 flex items-center justify-between group hover:shadow-md transition-shadow max-w-full">
+                  <span className="font-sans font-semibold text-sm text-gray-800">Contact us</span>
+                  <div className="bg-black text-white w-10 h-10 rounded-full flex items-center justify-center transform transition-transform group-hover:rotate-45">
+                    <ArrowUpRight size={18} />
+                  </div>
+                </Link>
+              </div>
+            )}
           </div>
 
           {/* Navigation & Info */}
