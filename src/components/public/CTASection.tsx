@@ -60,10 +60,10 @@ export function CTASection() {
               viewport={{ once: true }}
               transition={{ duration: 1, ease: cinematicEase, delay: 0.4 }}
             >
-              <Link href="/contact" className="px-8 py-3 rounded-full border border-white/50 bg-white/10 backdrop-blur-sm text-white font-sans text-xs font-bold tracking-widest hover:bg-white/20 hover:border-white transition-colors uppercase shadow-lg inline-block">
+              <Link href="/contact" className="px-8 py-3 rounded-full border border-white/50 bg-white/10 backdrop-blur-sm text-white font-sans text-xs font-bold tracking-widest hover:bg-white/20 hover:border-white active:scale-[0.98] hover:-translate-y-0.5 transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] uppercase shadow-lg inline-block">
                 Book a call
               </Link>
-              <Link href="/contact" className="px-10 py-3 rounded-full bg-white text-gray-900 font-sans text-xs font-bold tracking-widest hover:bg-gray-100 transition-colors shadow-lg shadow-black/10 uppercase inline-block">
+              <Link href="/contact" className="px-10 py-3 rounded-full bg-white text-gray-900 font-sans text-xs font-bold tracking-widest hover:bg-gray-100 active:scale-[0.98] hover:-translate-y-0.5 transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] shadow-lg shadow-black/10 uppercase inline-block">
                 Invest
               </Link>
             </motion.div>

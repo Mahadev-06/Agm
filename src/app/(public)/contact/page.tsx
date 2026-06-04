@@ -63,25 +63,25 @@ export default function ContactPage() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <label className="block font-sans text-[10px] font-bold uppercase tracking-widest text-gray-500 mb-2">First Name</label>
-                    <input type="text" className="w-full bg-white border-none rounded-2xl p-4 text-sm font-sans font-medium focus:ring-2 focus:ring-[#ff6b00]/50 outline-none transition-all shadow-sm" />
+                    <input type="text" className="w-full bg-white border border-gray-100 rounded-2xl p-4 text-sm font-sans font-medium focus:ring-2 focus:ring-[#ff6b00]/10 focus:border-[#ff6b00]/30 outline-none transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] shadow-sm focus:shadow-md" />
                   </div>
                   <div>
                     <label className="block font-sans text-[10px] font-bold uppercase tracking-widest text-gray-500 mb-2">Last Name</label>
-                    <input type="text" className="w-full bg-white border-none rounded-2xl p-4 text-sm font-sans font-medium focus:ring-2 focus:ring-[#ff6b00]/50 outline-none transition-all shadow-sm" />
+                    <input type="text" className="w-full bg-white border border-gray-100 rounded-2xl p-4 text-sm font-sans font-medium focus:ring-2 focus:ring-[#ff6b00]/10 focus:border-[#ff6b00]/30 outline-none transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] shadow-sm focus:shadow-md" />
                   </div>
                 </div>
                 
                 <div>
                   <label className="block font-sans text-[10px] font-bold uppercase tracking-widest text-gray-500 mb-2">Email Address</label>
-                  <input type="email" className="w-full bg-white border-none rounded-2xl p-4 text-sm font-sans font-medium focus:ring-2 focus:ring-[#ff6b00]/50 outline-none transition-all shadow-sm" />
+                  <input type="email" className="w-full bg-white border border-gray-100 rounded-2xl p-4 text-sm font-sans font-medium focus:ring-2 focus:ring-[#ff6b00]/10 focus:border-[#ff6b00]/30 outline-none transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] shadow-sm focus:shadow-md" />
                 </div>
                 
                 <div>
                   <label className="block font-sans text-[10px] font-bold uppercase tracking-widest text-gray-500 mb-2">Message</label>
-                  <textarea rows={4} className="w-full bg-white border-none rounded-2xl p-4 text-sm font-sans font-medium focus:ring-2 focus:ring-[#ff6b00]/50 outline-none transition-all shadow-sm"></textarea>
+                  <textarea rows={4} className="w-full bg-white border border-gray-100 rounded-2xl p-4 text-sm font-sans font-medium focus:ring-2 focus:ring-[#ff6b00]/10 focus:border-[#ff6b00]/30 outline-none transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] shadow-sm focus:shadow-md"></textarea>
                 </div>
                 
-                <button type="button" className="bg-black text-white px-8 py-4 rounded-full font-sans text-xs font-bold uppercase tracking-widest hover:bg-[#ff6b00] transition-colors shadow-md mt-4 w-full md:w-auto">
+                <button type="button" className="bg-black text-white px-8 py-4 rounded-full font-sans text-xs font-bold uppercase tracking-widest hover:bg-[#ff6b00] active:scale-[0.98] hover:-translate-y-0.5 transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] shadow-md hover:shadow-lg hover:shadow-[#ff6b00]/10 mt-4 w-full md:w-auto cursor-pointer">
                   Submit Inquiry
                 </button>
               </form>

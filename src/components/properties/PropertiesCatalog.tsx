@@ -12,6 +12,84 @@ import {
 
 const cinematicEase: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
+interface DropdownFilterProps {
+  label: string;
+  icon: React.ReactNode;
+  activeDropdown: string | null;
+  setActiveDropdown: (val: string | null) => void;
+  dropdownKey: string;
+  options: string[];
+  selectedVal: string;
+  setSelectedVal: (val: string) => void;
+  allLabel?: string;
+  customRenderOption?: (opt: string) => string;
+  scrollable?: boolean;
+}
+
+function DropdownFilter({
+  label,
+  icon,
+  activeDropdown,
+  setActiveDropdown,
+  dropdownKey,
+  options,
+  selectedVal,
+  setSelectedVal,
+  allLabel = "All",
+  customRenderOption,
+  scrollable = false,
+}: DropdownFilterProps) {
+  const isOpen = activeDropdown === dropdownKey;
+  
+  return (
+    <div className="flex flex-col gap-2 relative">
+      <label className="font-sans text-[10px] font-bold uppercase tracking-widest text-gray-400">{label}</label>
+      <button 
+        type="button"
+        onClick={() => setActiveDropdown(isOpen ? null : dropdownKey)}
+        className="flex justify-between items-center bg-gray-50/50 hover:bg-gray-50 border border-gray-100 px-4 py-3 rounded-2xl text-xs font-semibold text-black transition-all duration-300 focus:ring-2 focus:ring-[#ff6b00]/10 focus:border-[#ff6b00]/30 outline-none w-full cursor-pointer hover:shadow-sm"
+      >
+        <span className="flex items-center gap-2 truncate">
+          {icon}
+          {selectedVal === "All" ? allLabel : (customRenderOption ? customRenderOption(selectedVal) : selectedVal)}
+        </span>
+        <ChevronDown size={14} className={`text-gray-400 transition-transform duration-300 transform-gpu flex-shrink-0 ${isOpen ? "rotate-180" : "rotate-0"}`} />
+      </button>
+      
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: 8, scale: 0.96 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 8, scale: 0.96 }}
+            transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
+            className={`absolute top-[105%] left-0 w-full bg-white border border-gray-100 rounded-2xl shadow-xl p-2 z-30 flex flex-col gap-1 ${
+              scrollable ? "max-h-60 overflow-y-auto" : ""
+            }`}
+          >
+            {options.map(opt => (
+              <button
+                type="button"
+                key={opt}
+                onClick={() => {
+                  setSelectedVal(opt);
+                  setActiveDropdown(null);
+                }}
+                className={`flex items-center justify-between px-4 py-2.5 rounded-xl text-left text-xs font-semibold transition-colors w-full cursor-pointer ${
+                  selectedVal === opt ? "bg-[#ff6b00]/10 text-[#ff6b00]" : "text-gray-700 hover:bg-gray-50"
+                }`}
+              >
+                <span>{opt === "All" ? allLabel : (customRenderOption ? customRenderOption(opt) : opt)}</span>
+                {selectedVal === opt && <Check size={12} />}
+              </button>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
+
 interface PropertiesCatalogProps {
   initialProperties: Property[];
 }
@@ -35,6 +113,7 @@ export function PropertiesCatalog({ initialProperties }: PropertiesCatalogProps)
   const [isAdvancedOpen, setIsAdvancedOpen] = useState(false);
   const [isMobileDrawerOpen, setIsMobileDrawerOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isSearchFocused, setIsSearchFocused] = useState(false);
   
   // Custom dropdown open states (desktop)
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
@@ -272,17 +351,25 @@ export function PropertiesCatalog({ initialProperties }: PropertiesCatalogProps)
           <div className="w-full md:w-auto flex flex-col sm:flex-row gap-3 items-stretch sm:items-center">
             
             {/* Search Input Box */}
-            <div className="relative bg-white/90 backdrop-blur-md rounded-full px-5 py-3 shadow-md shadow-black/5 border border-gray-100 flex items-center flex-grow sm:w-72">
-              <Search size={16} className="text-gray-400 mr-3" />
+            <div 
+              className={`relative bg-white/90 backdrop-blur-md rounded-full px-5 py-3 shadow-md border flex items-center flex-grow sm:w-72 transition-all duration-300 ${
+                isSearchFocused 
+                  ? "border-[#ff6b00]/30 shadow-lg shadow-[#ff6b00]/5 ring-2 ring-[#ff6b00]/10" 
+                  : "border-gray-100 shadow-black/5"
+              }`}
+            >
+              <Search size={16} className={`mr-3 transition-colors duration-300 ${isSearchFocused ? "text-[#ff6b00]" : "text-gray-400"}`} />
               <input 
                 type="text" 
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
+                onFocus={() => setIsSearchFocused(true)}
+                onBlur={() => setIsSearchFocused(false)}
                 placeholder="Search by city, project, area..." 
                 className="bg-transparent border-none focus:ring-0 text-black w-full text-xs font-sans font-semibold outline-none placeholder-gray-400"
               />
               {searchQuery && (
-                <button onClick={() => setSearchQuery("")} className="text-gray-400 hover:text-black transition-colors ml-2">
+                <button onClick={() => setSearchQuery("")} className="text-gray-400 hover:text-black transition-colors ml-2 cursor-pointer">
                   <X size={14} />
                 </button>
               )}
@@ -294,7 +381,7 @@ export function PropertiesCatalog({ initialProperties }: PropertiesCatalogProps)
                 setIsAdvancedOpen(!isAdvancedOpen);
                 setIsMobileDrawerOpen(true);
               }}
-              className={`flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-full font-sans text-xs font-bold uppercase tracking-widest transition-all duration-300 shadow-md ${
+              className={`flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-full font-sans text-xs font-bold uppercase tracking-widest transition-all duration-300 active:scale-[0.98] hover:-translate-y-0.5 shadow-md cursor-pointer ${
                 isAdvancedOpen 
                   ? "bg-[#ff6b00] text-white shadow-[#ff6b00]/25" 
                   : "bg-white hover:bg-gray-50 text-black border border-gray-100"
@@ -329,106 +416,44 @@ export function PropertiesCatalog({ initialProperties }: PropertiesCatalogProps)
               <div className="grid grid-cols-4 gap-6 relative z-10">
                 
                 {/* 1. Location Selection */}
-                <div className="flex flex-col gap-2 relative">
-                  <label className="font-sans text-[10px] font-bold uppercase tracking-widest text-gray-400">Location / City</label>
-                  <button 
-                    onClick={() => setActiveDropdown(activeDropdown === "city" ? null : "city")}
-                    className="flex justify-between items-center bg-gray-50/50 hover:bg-gray-50 border border-gray-100 px-4 py-3 rounded-2xl text-xs font-semibold text-black transition-colors"
-                  >
-                    <span className="flex items-center gap-2">
-                      <MapPin size={14} className="text-gray-400" />
-                      {selectedCity === "All" ? "All Locations" : selectedCity}
-                    </span>
-                    <ChevronDown size={14} className="text-gray-400" />
-                  </button>
-                  {activeDropdown === "city" && (
-                    <div className="absolute top-[105%] left-0 w-full bg-white border border-gray-100 rounded-2xl shadow-xl p-2 z-30 flex flex-col gap-1">
-                      {cities.map(city => (
-                        <button
-                          key={city}
-                          onClick={() => {
-                            setSelectedCity(city);
-                            setActiveDropdown(null);
-                          }}
-                          className={`flex items-center justify-between px-4 py-2.5 rounded-xl text-left text-xs font-semibold transition-colors ${
-                            selectedCity === city ? "bg-[#ff6b00]/10 text-[#ff6b00]" : "text-gray-700 hover:bg-gray-50"
-                          }`}
-                        >
-                          <span>{city === "All" ? "All Locations" : city}</span>
-                          {selectedCity === city && <Check size={12} />}
-                        </button>
-                      ))}
-                    </div>
-                  )}
-                </div>
+                <DropdownFilter
+                  label="Location / City"
+                  icon={<MapPin size={14} className="text-gray-400" />}
+                  activeDropdown={activeDropdown}
+                  setActiveDropdown={setActiveDropdown}
+                  dropdownKey="city"
+                  options={cities}
+                  selectedVal={selectedCity}
+                  setSelectedVal={setSelectedCity}
+                  allLabel="All Locations"
+                />
 
                 {/* 2. Property Type Selection */}
-                <div className="flex flex-col gap-2 relative">
-                  <label className="font-sans text-[10px] font-bold uppercase tracking-widest text-gray-400">Property Type</label>
-                  <button 
-                    onClick={() => setActiveDropdown(activeDropdown === "type" ? null : "type")}
-                    className="flex justify-between items-center bg-gray-50/50 hover:bg-gray-50 border border-gray-100 px-4 py-3 rounded-2xl text-xs font-semibold text-black transition-colors"
-                  >
-                    <span className="flex items-center gap-2">
-                      <Building2 size={14} className="text-gray-400" />
-                      {selectedType === "All" ? "All Types" : selectedType}
-                    </span>
-                    <ChevronDown size={14} className="text-gray-400" />
-                  </button>
-                  {activeDropdown === "type" && (
-                    <div className="absolute top-[105%] left-0 w-full bg-white border border-gray-100 rounded-2xl shadow-xl p-2 z-30 flex flex-col gap-1 max-h-60 overflow-y-auto">
-                      {propertyTypes.map(type => (
-                        <button
-                          key={type}
-                          onClick={() => {
-                            setSelectedType(type);
-                            setActiveDropdown(null);
-                          }}
-                          className={`flex items-center justify-between px-4 py-2.5 rounded-xl text-left text-xs font-semibold transition-colors ${
-                            selectedType === type ? "bg-[#ff6b00]/10 text-[#ff6b00]" : "text-gray-700 hover:bg-gray-50"
-                          }`}
-                        >
-                          <span>{type === "All" ? "All Types" : type}</span>
-                          {selectedType === type && <Check size={12} />}
-                        </button>
-                      ))}
-                    </div>
-                  )}
-                </div>
+                <DropdownFilter
+                  label="Property Type"
+                  icon={<Building2 size={14} className="text-gray-400" />}
+                  activeDropdown={activeDropdown}
+                  setActiveDropdown={setActiveDropdown}
+                  dropdownKey="type"
+                  options={propertyTypes}
+                  selectedVal={selectedType}
+                  setSelectedVal={setSelectedType}
+                  allLabel="All Types"
+                  scrollable
+                />
 
                 {/* 3. BHK Selection */}
-                <div className="flex flex-col gap-2 relative">
-                  <label className="font-sans text-[10px] font-bold uppercase tracking-widest text-gray-400">BHK / Bedrooms</label>
-                  <button 
-                    onClick={() => setActiveDropdown(activeDropdown === "bhk" ? null : "bhk")}
-                    className="flex justify-between items-center bg-gray-50/50 hover:bg-gray-50 border border-gray-100 px-4 py-3 rounded-2xl text-xs font-semibold text-black transition-colors"
-                  >
-                    <span className="flex items-center gap-2">
-                      <Building2 size={14} className="text-gray-400" />
-                      {selectedBhk === "All" ? "All BHKs" : selectedBhk}
-                    </span>
-                    <ChevronDown size={14} className="text-gray-400" />
-                  </button>
-                  {activeDropdown === "bhk" && (
-                    <div className="absolute top-[105%] left-0 w-full bg-white border border-gray-100 rounded-2xl shadow-xl p-2 z-30 flex flex-col gap-1">
-                      {bhkOptions.map(bhk => (
-                        <button
-                          key={bhk}
-                          onClick={() => {
-                            setSelectedBhk(bhk);
-                            setActiveDropdown(null);
-                          }}
-                          className={`flex items-center justify-between px-4 py-2.5 rounded-xl text-left text-xs font-semibold transition-colors ${
-                            selectedBhk === bhk ? "bg-[#ff6b00]/10 text-[#ff6b00]" : "text-gray-700 hover:bg-gray-50"
-                          }`}
-                        >
-                          <span>{bhk === "All" ? "All BHKs" : bhk}</span>
-                          {selectedBhk === bhk && <Check size={12} />}
-                        </button>
-                      ))}
-                    </div>
-                  )}
-                </div>
+                <DropdownFilter
+                  label="BHK / Bedrooms"
+                  icon={<Building2 size={14} className="text-gray-400" />}
+                  activeDropdown={activeDropdown}
+                  setActiveDropdown={setActiveDropdown}
+                  dropdownKey="bhk"
+                  options={bhkOptions}
+                  selectedVal={selectedBhk}
+                  setSelectedVal={setSelectedBhk}
+                  allLabel="All BHKs"
+                />
 
                 {/* 4. Price range slide/custom input */}
                 <div className="flex flex-col gap-2">
@@ -489,208 +514,83 @@ export function PropertiesCatalog({ initialProperties }: PropertiesCatalogProps)
               <div className="grid grid-cols-6 gap-4">
                 
                 {/* 5. Vastu */}
-                <div className="flex flex-col gap-1.5 relative">
-                  <label className="font-sans text-[8px] font-bold uppercase tracking-widest text-gray-400">Vastu Compliance</label>
-                  <button 
-                    onClick={() => setActiveDropdown(activeDropdown === "vastu" ? null : "vastu")}
-                    className="flex justify-between items-center bg-gray-50/50 hover:bg-gray-50 border border-gray-100 px-3.5 py-2.5 rounded-xl text-[11px] font-semibold text-black transition-colors"
-                  >
-                    <span className="flex items-center gap-1.5 truncate">
-                      <Sparkles size={11} className="text-gray-400" />
-                      {selectedVastu === "All" ? "Doesn't Matter" : selectedVastu}
-                    </span>
-                    <ChevronDown size={12} className="text-gray-400" />
-                  </button>
-                  {activeDropdown === "vastu" && (
-                    <div className="absolute top-[105%] left-0 w-full bg-white border border-gray-100 rounded-xl shadow-xl p-1.5 z-30 flex flex-col gap-0.5">
-                      {["All", "Vastu Compliant", "Non-Vastu"].map(opt => (
-                        <button
-                          key={opt}
-                          onClick={() => {
-                            setSelectedVastu(opt);
-                            setActiveDropdown(null);
-                          }}
-                          className={`flex items-center justify-between px-3 py-2 rounded-lg text-left text-[11px] font-semibold transition-colors ${
-                            selectedVastu === opt ? "bg-[#ff6b00]/10 text-[#ff6b00]" : "text-gray-700 hover:bg-gray-50"
-                          }`}
-                        >
-                          <span>{opt === "All" ? "Doesn't Matter" : opt}</span>
-                          {selectedVastu === opt && <Check size={10} />}
-                        </button>
-                      ))}
-                    </div>
-                  )}
-                </div>
+                <DropdownFilter
+                  label="Vastu Compliance"
+                  icon={<Sparkles size={11} className="text-gray-400" />}
+                  activeDropdown={activeDropdown}
+                  setActiveDropdown={setActiveDropdown}
+                  dropdownKey="vastu"
+                  options={vastuOptions}
+                  selectedVal={selectedVastu}
+                  setSelectedVal={setSelectedVastu}
+                  allLabel="Doesn't Matter"
+                />
 
                 {/* 6. Furnishing */}
-                <div className="flex flex-col gap-1.5 relative">
-                  <label className="font-sans text-[8px] font-bold uppercase tracking-widest text-gray-400">Furnishing</label>
-                  <button 
-                    onClick={() => setActiveDropdown(activeDropdown === "furnish" ? null : "furnish")}
-                    className="flex justify-between items-center bg-gray-50/50 hover:bg-gray-50 border border-gray-100 px-3.5 py-2.5 rounded-xl text-[11px] font-semibold text-black transition-colors"
-                  >
-                    <span className="flex items-center gap-1.5 truncate">
-                      <Home size={11} className="text-gray-400" />
-                      {selectedFurnishing === "All" ? "Any Furnishing" : selectedFurnishing}
-                    </span>
-                    <ChevronDown size={12} className="text-gray-400" />
-                  </button>
-                  {activeDropdown === "furnish" && (
-                    <div className="absolute top-[105%] left-0 w-full bg-white border border-gray-100 rounded-xl shadow-xl p-1.5 z-30 flex flex-col gap-0.5">
-                      {furnishingOptions.map(opt => (
-                        <button
-                          key={opt}
-                          onClick={() => {
-                            setSelectedFurnishing(opt);
-                            setActiveDropdown(null);
-                          }}
-                          className={`flex items-center justify-between px-3 py-2 rounded-lg text-left text-[11px] font-semibold transition-colors ${
-                            selectedFurnishing === opt ? "bg-[#ff6b00]/10 text-[#ff6b00]" : "text-gray-700 hover:bg-gray-50"
-                          }`}
-                        >
-                          <span>{opt === "All" ? "Any Furnishing" : opt}</span>
-                          {selectedFurnishing === opt && <Check size={10} />}
-                        </button>
-                      ))}
-                    </div>
-                  )}
-                </div>
+                <DropdownFilter
+                  label="Furnishing"
+                  icon={<Home size={11} className="text-gray-400" />}
+                  activeDropdown={activeDropdown}
+                  setActiveDropdown={setActiveDropdown}
+                  dropdownKey="furnish"
+                  options={furnishingOptions}
+                  selectedVal={selectedFurnishing}
+                  setSelectedVal={setSelectedFurnishing}
+                  allLabel="Any Furnishing"
+                />
 
                 {/* 7. Status */}
-                <div className="flex flex-col gap-1.5 relative">
-                  <label className="font-sans text-[8px] font-bold uppercase tracking-widest text-gray-400">Construction Status</label>
-                  <button 
-                    onClick={() => setActiveDropdown(activeDropdown === "status" ? null : "status")}
-                    className="flex justify-between items-center bg-gray-50/50 hover:bg-gray-50 border border-gray-100 px-3.5 py-2.5 rounded-xl text-[11px] font-semibold text-black transition-colors"
-                  >
-                    <span className="flex items-center gap-1.5 truncate">
-                      <Calendar size={11} className="text-gray-400" />
-                      {selectedStatus === "All" ? "Any Status" : selectedStatus}
-                    </span>
-                    <ChevronDown size={12} className="text-gray-400" />
-                  </button>
-                  {activeDropdown === "status" && (
-                    <div className="absolute top-[105%] left-0 w-full bg-white border border-gray-100 rounded-xl shadow-xl p-1.5 z-30 flex flex-col gap-0.5">
-                      {statusOptions.map(opt => (
-                        <button
-                          key={opt}
-                          onClick={() => {
-                            setSelectedStatus(opt);
-                            setActiveDropdown(null);
-                          }}
-                          className={`flex items-center justify-between px-3 py-2 rounded-lg text-left text-[11px] font-semibold transition-colors ${
-                            selectedStatus === opt ? "bg-[#ff6b00]/10 text-[#ff6b00]" : "text-gray-700 hover:bg-gray-50"
-                          }`}
-                        >
-                          <span>{opt === "All" ? "Any Status" : opt}</span>
-                          {selectedStatus === opt && <Check size={10} />}
-                        </button>
-                      ))}
-                    </div>
-                  )}
-                </div>
+                <DropdownFilter
+                  label="Construction Status"
+                  icon={<Calendar size={11} className="text-gray-400" />}
+                  activeDropdown={activeDropdown}
+                  setActiveDropdown={setActiveDropdown}
+                  dropdownKey="status"
+                  options={statusOptions}
+                  selectedVal={selectedStatus}
+                  setSelectedVal={setSelectedStatus}
+                  allLabel="Any Status"
+                />
 
                 {/* 8. Size */}
-                <div className="flex flex-col gap-1.5 relative">
-                  <label className="font-sans text-[8px] font-bold uppercase tracking-widest text-gray-400">Area / Size</label>
-                  <button 
-                    onClick={() => setActiveDropdown(activeDropdown === "size" ? null : "size")}
-                    className="flex justify-between items-center bg-gray-50/50 hover:bg-gray-50 border border-gray-100 px-3.5 py-2.5 rounded-xl text-[11px] font-semibold text-black transition-colors"
-                  >
-                    <span className="flex items-center gap-1.5 truncate">
-                      <Building2 size={11} className="text-gray-400" />
-                      {selectedSize === "All" ? "Any Size" : selectedSize}
-                    </span>
-                    <ChevronDown size={12} className="text-gray-400" />
-                  </button>
-                  {activeDropdown === "size" && (
-                    <div className="absolute top-[105%] left-0 w-full bg-white border border-gray-100 rounded-xl shadow-xl p-1.5 z-30 flex flex-col gap-0.5">
-                      {sizeOptions.map(opt => (
-                        <button
-                          key={opt}
-                          onClick={() => {
-                            setSelectedSize(opt);
-                            setActiveDropdown(null);
-                          }}
-                          className={`flex items-center justify-between px-3 py-2 rounded-lg text-left text-[11px] font-semibold transition-colors ${
-                            selectedSize === opt ? "bg-[#ff6b00]/10 text-[#ff6b00]" : "text-gray-700 hover:bg-gray-50"
-                          }`}
-                        >
-                          <span>{opt === "All" ? "Any Size" : opt}</span>
-                          {selectedSize === opt && <Check size={10} />}
-                        </button>
-                      ))}
-                    </div>
-                  )}
-                </div>
+                <DropdownFilter
+                  label="Area / Size"
+                  icon={<Building2 size={11} className="text-gray-400" />}
+                  activeDropdown={activeDropdown}
+                  setActiveDropdown={setActiveDropdown}
+                  dropdownKey="size"
+                  options={sizeOptions}
+                  selectedVal={selectedSize}
+                  setSelectedVal={setSelectedSize}
+                  allLabel="Any Size"
+                />
 
                 {/* 9. Facing */}
-                <div className="flex flex-col gap-1.5 relative">
-                  <label className="font-sans text-[8px] font-bold uppercase tracking-widest text-gray-400">Facing</label>
-                  <button 
-                    onClick={() => setActiveDropdown(activeDropdown === "facing" ? null : "facing")}
-                    className="flex justify-between items-center bg-gray-50/50 hover:bg-gray-50 border border-gray-100 px-3.5 py-2.5 rounded-xl text-[11px] font-semibold text-black transition-colors"
-                  >
-                    <span className="flex items-center gap-1.5 truncate">
-                      <Compass size={11} className="text-gray-400" />
-                      {selectedFacing === "All" ? "Any Facing" : `${selectedFacing} Facing`}
-                    </span>
-                    <ChevronDown size={12} className="text-gray-400" />
-                  </button>
-                  {activeDropdown === "facing" && (
-                    <div className="absolute top-[105%] left-0 w-full bg-white border border-gray-100 rounded-xl shadow-xl p-1.5 z-30 flex flex-col gap-0.5">
-                      {facingOptions.map(opt => (
-                        <button
-                          key={opt}
-                          onClick={() => {
-                            setSelectedFacing(opt);
-                            setActiveDropdown(null);
-                          }}
-                          className={`flex items-center justify-between px-3 py-2 rounded-lg text-left text-[11px] font-semibold transition-colors ${
-                            selectedFacing === opt ? "bg-[#ff6b00]/10 text-[#ff6b00]" : "text-gray-700 hover:bg-gray-50"
-                          }`}
-                        >
-                          <span>{opt === "All" ? "Any Facing" : `${opt} Facing`}</span>
-                          {selectedFacing === opt && <Check size={10} />}
-                        </button>
-                      ))}
-                    </div>
-                  )}
-                </div>
+                <DropdownFilter
+                  label="Facing"
+                  icon={<Compass size={11} className="text-gray-400" />}
+                  activeDropdown={activeDropdown}
+                  setActiveDropdown={setActiveDropdown}
+                  dropdownKey="facing"
+                  options={facingOptions}
+                  selectedVal={selectedFacing}
+                  setSelectedVal={setSelectedFacing}
+                  allLabel="Any Facing"
+                  customRenderOption={(opt) => opt === "All" ? "Any Facing" : `${opt} Facing`}
+                />
 
                 {/* 10. Availability */}
-                <div className="flex flex-col gap-1.5 relative">
-                  <label className="font-sans text-[8px] font-bold uppercase tracking-widest text-gray-400">Availability</label>
-                  <button 
-                    onClick={() => setActiveDropdown(activeDropdown === "avail" ? null : "avail")}
-                    className="flex justify-between items-center bg-gray-50/50 hover:bg-gray-50 border border-gray-100 px-3.5 py-2.5 rounded-xl text-[11px] font-semibold text-black transition-colors"
-                  >
-                    <span className="flex items-center gap-1.5 truncate">
-                      <Key size={11} className="text-gray-400" />
-                      {selectedAvailability === "All" ? "Buy/Rent/Lease" : selectedAvailability}
-                    </span>
-                    <ChevronDown size={12} className="text-gray-400" />
-                  </button>
-                  {activeDropdown === "avail" && (
-                    <div className="absolute top-[105%] left-0 w-full bg-white border border-gray-100 rounded-xl shadow-xl p-1.5 z-30 flex flex-col gap-0.5">
-                      {availabilityOptions.map(opt => (
-                        <button
-                          key={opt}
-                          onClick={() => {
-                            setSelectedAvailability(opt);
-                            setActiveDropdown(null);
-                          }}
-                          className={`flex items-center justify-between px-3 py-2 rounded-lg text-left text-[11px] font-semibold transition-colors ${
-                            selectedAvailability === opt ? "bg-[#ff6b00]/10 text-[#ff6b00]" : "text-gray-700 hover:bg-gray-50"
-                          }`}
-                        >
-                          <span>{opt === "All" ? "Any Availability" : opt}</span>
-                          {selectedAvailability === opt && <Check size={10} />}
-                        </button>
-                      ))}
-                    </div>
-                  )}
-                </div>
+                <DropdownFilter
+                  label="Availability"
+                  icon={<Key size={11} className="text-gray-400" />}
+                  activeDropdown={activeDropdown}
+                  setActiveDropdown={setActiveDropdown}
+                  dropdownKey="avail"
+                  options={availabilityOptions}
+                  selectedVal={selectedAvailability}
+                  setSelectedVal={setSelectedAvailability}
+                  allLabel="Buy/Rent/Lease"
+                />
 
               </div>
 
@@ -750,24 +650,29 @@ export function PropertiesCatalog({ initialProperties }: PropertiesCatalogProps)
         </div>
 
         {/* Chips display */}
-        {activeChips.length > 0 && (
-          <div className="flex flex-wrap gap-2 pt-1">
+        <div className="flex flex-wrap gap-2 pt-1">
+          <AnimatePresence mode="popLayout">
             {activeChips.map((chip) => (
-              <div 
+              <motion.div 
                 key={chip.key}
+                layout
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.8 }}
+                transition={{ duration: 0.25, ease: cinematicEase }}
                 className="bg-gray-50 border border-gray-100 rounded-full px-3.5 py-1.5 flex items-center gap-2 text-[10px] font-bold text-gray-700 uppercase tracking-wider"
               >
                 <span>{chip.label}</span>
                 <button 
                   onClick={chip.onClear}
-                  className="w-4 h-4 bg-gray-200/60 hover:bg-gray-200 text-gray-500 hover:text-black rounded-full flex items-center justify-center transition-colors"
+                  className="w-4 h-4 bg-gray-200/60 hover:bg-gray-200 text-gray-500 hover:text-black rounded-full flex items-center justify-center transition-colors cursor-pointer"
                 >
                   <X size={10} />
                 </button>
-              </div>
+              </motion.div>
             ))}
-          </div>
-        )}
+          </AnimatePresence>
+        </div>
       </div>
 
       {/* ───────────────── LISTINGS GRID WITH SMOOTH TRANSITIONS ───────────────── */}

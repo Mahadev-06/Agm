@@ -71,20 +71,20 @@ export function Footer() {
                   <h4 className="font-sans text-xs font-semibold text-gray-800 mb-2">Navigation</h4>
                 </div>
                 <ul className="space-y-2 font-sans text-xs text-gray-500 font-medium">
-                  <li><Link href="/" className="hover:text-primary transition-colors">Home</Link></li>
-                  <li><Link href="/about" className="hover:text-primary transition-colors">About</Link></li>
+                  <li><Link href="/" className="hover:text-primary transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]">Home</Link></li>
+                  <li><Link href="/about" className="hover:text-primary transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]">About</Link></li>
                 </ul>
                 <ul className="space-y-2 font-sans text-xs text-gray-500 font-medium">
-                  <li><Link href="/projects" className="hover:text-primary transition-colors">Projects</Link></li>
-                  <li><Link href="/solutions" className="hover:text-primary transition-colors">Solutions</Link></li>
+                  <li><Link href="/properties" className="hover:text-primary transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]">Estates</Link></li>
+                  <li><Link href="/custom-request" className="hover:text-primary transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]">Bespoke Request</Link></li>
                 </ul>
               </div>
 
               <div>
                 <h4 className="font-sans text-xs font-semibold text-gray-800 mb-2">Info</h4>
                 <ul className="space-y-2 font-sans text-xs text-gray-500 font-medium">
-                  <li><a href="mailto:info@agmhousing.com" className="hover:text-primary transition-colors">info@agmhousing.com</a></li>
-                  <li><a href="tel:+12125558473" className="hover:text-primary transition-colors">+1 (212) 555-8473</a></li>
+                  <li><a href="mailto:info@agmhousing.com" className="hover:text-primary transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]">info@agmhousing.com</a></li>
+                  <li><a href="tel:+12125558473" className="hover:text-primary transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]">+1 (212) 555-8473</a></li>
                 </ul>
               </div>
 
@@ -93,13 +93,13 @@ export function Footer() {
 
           {/* Socials */}
           <div className="flex flex-col sm:flex-row gap-3">
-            <a href="#" className="flex-1 bg-[#faebe0] hover:bg-[#f5e0d0] transition-colors rounded-full h-12 flex items-center justify-center font-sans text-xs font-semibold text-gray-800">
+            <a href="#" className="flex-1 bg-[#faebe0] hover:bg-[#f5e0d0] transition-colors rounded-full h-12 flex items-center justify-center font-sans text-xs font-semibold text-gray-800 transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 active:scale-[0.98] hover:shadow-sm">
               Instagram
             </a>
-            <a href="#" className="w-full sm:w-20 bg-[#faebe0] hover:bg-[#f5e0d0] transition-colors rounded-full h-12 flex items-center justify-center font-sans text-base font-bold text-gray-800">
+            <a href="#" className="w-full sm:w-20 bg-[#faebe0] hover:bg-[#f5e0d0] transition-colors rounded-full h-12 flex items-center justify-center font-sans text-base font-bold text-gray-800 transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 active:scale-[0.98] hover:shadow-sm">
               𝕏
             </a>
-            <a href="#" className="flex-1 bg-[#faebe0] hover:bg-[#f5e0d0] transition-colors rounded-full h-12 flex items-center justify-center font-sans text-xs font-semibold text-gray-800">
+            <a href="#" className="flex-1 bg-[#faebe0] hover:bg-[#f5e0d0] transition-colors rounded-full h-12 flex items-center justify-center font-sans text-xs font-semibold text-gray-800 transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 active:scale-[0.98] hover:shadow-sm">
               Facebook
             </a>
           </div>

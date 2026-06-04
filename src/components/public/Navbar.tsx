@@ -80,7 +80,7 @@ export function Navbar() {
               <Link
                 key={link.name}
                 href={link.href}
-                className="font-sans text-xs font-semibold uppercase tracking-[0.15em] text-gray-500 hover:text-primary transition-colors duration-300 relative after:content-[''] after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-[1px] after:bg-black hover:after:w-full after:transition-all after:duration-300"
+                className="font-sans text-xs font-semibold uppercase tracking-[0.15em] text-gray-500 hover:text-primary transition-colors duration-300 relative after:content-[''] after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-[1px] after:bg-black hover:after:w-full after:transition-all after:duration-300 after:ease-[cubic-bezier(0.22,1,0.36,1)]"
               >
                 {link.name}
               </Link>
@@ -90,7 +90,7 @@ export function Navbar() {
           <div className="hidden md:block">
             <Link
               href="/custom-request"
-              className="bg-black text-white px-8 py-3 rounded-full font-sans text-xs font-bold uppercase tracking-widest hover:bg-gray-800 transition-colors shadow-md hover:shadow-lg inline-block"
+              className="bg-black text-white px-8 py-3 rounded-full font-sans text-xs font-bold uppercase tracking-widest hover:bg-gray-800 active:scale-[0.98] hover:-translate-y-0.5 transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] shadow-md hover:shadow-lg inline-block"
             >
               Bespoke Request
             </Link>
@@ -155,7 +155,7 @@ export function Navbar() {
                 <Link
                   href="/custom-request"
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="bg-black text-white px-8 py-4 rounded-full font-sans text-xs font-bold uppercase tracking-widest hover:bg-[#ff6b00] transition-colors shadow-md text-center block w-full max-w-sm"
+                  className="bg-black text-white px-8 py-4 rounded-full font-sans text-xs font-bold uppercase tracking-widest hover:bg-[#ff6b00] active:scale-[0.98] transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] shadow-md text-center block w-full max-w-sm"
                 >
                   Bespoke Request
                 </Link>

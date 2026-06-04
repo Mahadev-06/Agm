@@ -18,13 +18,13 @@ export default function CustomRequestPage() {
             <form className="space-y-8">
               <div>
                 <label className="block font-sans text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-3">Target Locations</label>
-                <input type="text" placeholder="e.g. Mayfair, Palm Jumeirah, Beverly Hills" className="w-full bg-gray-50 border-none rounded-2xl p-5 text-sm font-sans focus:ring-2 focus:ring-secondary/50 outline-none transition-all" />
+                <input type="text" placeholder="e.g. Mayfair, Palm Jumeirah, Beverly Hills" className="w-full bg-gray-50/50 border border-gray-100 rounded-2xl p-5 text-sm font-sans focus:bg-white focus:ring-2 focus:ring-[#ff6b00]/10 focus:border-[#ff6b00]/30 outline-none transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] shadow-sm focus:shadow-md" />
               </div>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div>
                   <label className="block font-sans text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-3">Property Type</label>
-                  <select className="w-full bg-gray-50 border-none rounded-2xl p-5 text-sm font-sans focus:ring-2 focus:ring-secondary/50 outline-none transition-all text-primary appearance-none">
+                  <select className="w-full bg-gray-50/50 border border-gray-100 rounded-2xl p-5 text-sm font-sans focus:bg-white focus:ring-2 focus:ring-[#ff6b00]/10 focus:border-[#ff6b00]/30 outline-none transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] text-primary appearance-none shadow-sm focus:shadow-md cursor-pointer">
                     <option>Penthouse</option>
                     <option>Villa / Estate</option>
                     <option>Urban Apartment</option>
@@ -33,7 +33,7 @@ export default function CustomRequestPage() {
                 </div>
                 <div>
                   <label className="block font-sans text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-3">Budget Range</label>
-                  <select className="w-full bg-gray-50 border-none rounded-2xl p-5 text-sm font-sans focus:ring-2 focus:ring-secondary/50 outline-none transition-all text-primary appearance-none">
+                  <select className="w-full bg-gray-50/50 border border-gray-100 rounded-2xl p-5 text-sm font-sans focus:bg-white focus:ring-2 focus:ring-[#ff6b00]/10 focus:border-[#ff6b00]/30 outline-none transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] text-primary appearance-none shadow-sm focus:shadow-md cursor-pointer">
                     <option>$2M - $5M</option>
                     <option>$5M - $10M</option>
                     <option>$10M - $25M</option>
@@ -44,11 +44,11 @@ export default function CustomRequestPage() {
 
               <div>
                 <label className="block font-sans text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-3">Specific Requirements</label>
-                <textarea rows={5} placeholder="Describe any mandatory features, architectural styles, or amenities..." className="w-full bg-gray-50 border-none rounded-2xl p-5 text-sm font-sans focus:ring-2 focus:ring-secondary/50 outline-none transition-all"></textarea>
+                <textarea rows={5} placeholder="Describe any mandatory features, architectural styles, or amenities..." className="w-full bg-gray-50/50 border border-gray-100 rounded-2xl p-5 text-sm font-sans focus:bg-white focus:ring-2 focus:ring-[#ff6b00]/10 focus:border-[#ff6b00]/30 outline-none transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] shadow-sm focus:shadow-md"></textarea>
               </div>
 
               <div className="pt-4 border-t border-gray-100">
-                 <button type="button" className="bg-primary text-white w-full py-5 rounded-full font-sans text-sm font-bold uppercase tracking-widest hover:bg-secondary transition-colors shadow-lg">
+                 <button type="button" className="bg-[#1a1a1a] text-white w-full py-5 rounded-full font-sans text-sm font-bold uppercase tracking-widest hover:bg-[#ff6b00] active:scale-[0.98] hover:-translate-y-0.5 transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] shadow-lg hover:shadow-[#ff6b00]/10 cursor-pointer">
                     Initiate Search
                  </button>
                  <p className="text-center font-sans text-[10px] text-gray-400 mt-4 uppercase tracking-widest">

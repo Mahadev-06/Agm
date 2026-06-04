@@ -35,7 +35,7 @@ export function PropertyCard({ property }: PropertyCardProps) {
   return (
     <Link href={`/properties/${property.id}`} className="block w-full group">
       <motion.div 
-        className="relative bg-[#f0ece4] rounded-[2rem] md:rounded-[2.5rem] p-5 sm:p-8 md:p-12 lg:p-16 flex flex-col lg:flex-row gap-6 md:gap-8 lg:gap-12 min-h-[480px] md:min-h-[500px] lg:min-h-[540px] overflow-hidden shadow-sm hover:shadow-xl transition-shadow duration-500"
+        className="relative bg-[#f0ece4] rounded-[2rem] md:rounded-[2.5rem] p-5 sm:p-8 md:p-12 lg:p-16 flex flex-col lg:flex-row gap-6 md:gap-8 lg:gap-12 min-h-[480px] md:min-h-[500px] lg:min-h-[540px] overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-700 ease-[0.22,1,0.36,1] hover:-translate-y-1 transform-gpu"
         initial={{ opacity: 0, y: 50, scale: 0.98 }}
         whileInView={{ opacity: 1, y: 0, scale: 1 }}
         viewport={{ once: true, amount: 0.1 }}
@@ -54,18 +54,18 @@ export function PropertyCard({ property }: PropertyCardProps) {
             </p>
           </div>
 
-          <div className="relative w-full h-44 sm:h-56 md:h-64 lg:h-72 rounded-2xl overflow-hidden">
+          <div className="relative w-full h-44 sm:h-56 md:h-64 lg:h-72 rounded-2xl overflow-hidden transform-gpu will-change-transform">
             <img 
               src={property.image} 
               alt={property.title} 
-              className="w-full h-full object-cover object-center transition-transform duration-[1.5s] group-hover:scale-110"
+              className="w-full h-full object-cover object-center transition-transform duration-[1.2s] ease-[0.22,1,0.36,1] group-hover:scale-105 will-change-transform transform-gpu"
             />
           </div>
         </div>
 
         {/* Right Side: Floating Info Card */}
         <div className="lg:w-[45%] flex items-center justify-center lg:justify-end relative z-20">
-          <div className="bg-white rounded-2xl md:rounded-3xl p-5 sm:p-8 shadow-[0_8px_40px_rgba(0,0,0,0.06)] w-full max-w-md transition-transform duration-500 group-hover:-translate-y-1">
+          <div className="bg-white rounded-2xl md:rounded-3xl p-5 sm:p-8 shadow-[0_8px_40px_rgba(0,0,0,0.04)] w-full max-w-md transition-all duration-700 ease-[0.22,1,0.36,1] group-hover:-translate-y-2 transform-gpu will-change-transform">
             
             {/* Tags */}
             <div className="flex flex-wrap gap-2 mb-4 md:mb-6">
