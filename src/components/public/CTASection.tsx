@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Link from "next/link";
 
 const cinematicEase: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
@@ -59,12 +60,12 @@ export function CTASection() {
               viewport={{ once: true }}
               transition={{ duration: 1, ease: cinematicEase, delay: 0.4 }}
             >
-              <button className="px-8 py-3 rounded-full border border-white/50 bg-white/10 backdrop-blur-sm text-white font-sans text-xs font-bold tracking-widest hover:bg-white/20 hover:border-white transition-colors uppercase shadow-lg">
+              <Link href="/contact" className="px-8 py-3 rounded-full border border-white/50 bg-white/10 backdrop-blur-sm text-white font-sans text-xs font-bold tracking-widest hover:bg-white/20 hover:border-white transition-colors uppercase shadow-lg inline-block">
                 Book a call
-              </button>
-              <button className="px-10 py-3 rounded-full bg-white text-gray-900 font-sans text-xs font-bold tracking-widest hover:bg-gray-100 transition-colors shadow-lg shadow-black/10 uppercase">
+              </Link>
+              <Link href="/contact" className="px-10 py-3 rounded-full bg-white text-gray-900 font-sans text-xs font-bold tracking-widest hover:bg-gray-100 transition-colors shadow-lg shadow-black/10 uppercase inline-block">
                 Invest
-              </button>
+              </Link>
             </motion.div>
           </div>
         </motion.div>
