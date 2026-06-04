@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
+import Link from "next/link";
 import { MorphingBlob } from "@/components/animations/MorphingBlob";
 
 const cinematicEase: [number, number, number, number] = [0.22, 1, 0.36, 1];
@@ -86,12 +87,12 @@ export function HeroSection() {
                <p className="text-white/80 font-sans text-[10px] leading-relaxed mb-4">
                  The Orange Tower stands as a vibrant architectural landmark...
                </p>
-               <button className="w-full bg-white text-primary font-sans text-[10px] font-bold rounded-full py-2.5 px-4 flex justify-between items-center hover:bg-gray-50 transition-colors group/btn">
+               <Link href="/properties" className="w-full bg-white text-primary font-sans text-[10px] font-bold rounded-full py-2.5 px-4 flex justify-between items-center hover:bg-gray-50 transition-colors group/btn">
                   View more
                   <div className="bg-primary text-white w-5 h-5 rounded-full flex items-center justify-center transform transition-transform group-hover/btn:scale-110">
                     <ArrowRight size={12} />
                   </div>
-               </button>
+               </Link>
             </motion.div>
 
             {/* Dot Connector */}
